@@ -1,0 +1,375 @@
+/* ==============================================================================
+   Proper Computer — Public Website Stylesheet
+   Modern, Responsive & Aesthetic Design
+   ============================================================================== */
+
+:root {
+  --pc-primary: #4f46e5;
+  --pc-primary-hover: #4338ca;
+  --pc-primary-light: #eef2ff;
+  --pc-secondary: #0ea5e9;
+  --pc-accent: #f59e0b;
+  --pc-dark: #0f172a;
+  --pc-slate: #334155;
+  --pc-muted: #64748b;
+  --pc-light: #f8fafc;
+  --pc-border: #e2e8f0;
+  --pc-card-bg: #ffffff;
+  --pc-font-heading: 'Outfit', sans-serif;
+  --pc-font-body: 'Inter', sans-serif;
+  --pc-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --pc-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --pc-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --pc-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  font-family: var(--pc-font-body);
+  color: var(--pc-slate);
+  background-color: #fdfdfd;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--pc-font-heading);
+  color: var(--pc-dark);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   Top Bar & Header
+-------------------------------------------------------------------------- */
+.top-bar {
+  background: var(--pc-dark);
+  color: #94a3b8;
+  font-size: 0.85rem;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.top-bar a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.top-bar a:hover {
+  color: #ffffff;
+}
+
+.navbar-main {
+  background: #ffffff;
+  padding: 16px 0;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
+}
+.navbar-brand img {
+  height: 48px;
+  width: auto;
+}
+.nav-link {
+  font-weight: 500;
+  color: var(--pc-slate) !important;
+  padding: 8px 16px !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--pc-primary) !important;
+  background-color: var(--pc-primary-light);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons & Badges
+-------------------------------------------------------------------------- */
+.btn-pc-primary {
+  background: linear-gradient(135deg, var(--pc-primary) 0%, #6366f1 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 28px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+.btn-pc-primary:hover {
+  background: linear-gradient(135deg, var(--pc-primary-hover) 0%, #4f46e5 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+.btn-pc-outline {
+  border: 2px solid var(--pc-primary);
+  color: var(--pc-primary);
+  padding: 10px 24px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+.btn-pc-outline:hover {
+  background: var(--pc-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+-------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 40%),
+              #ffffff;
+  padding: 80px 0 100px;
+  border-bottom: 1px solid var(--pc-border);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--pc-primary-light);
+  color: var(--pc-primary);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-size: 3.4rem;
+  line-height: 1.15;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--pc-muted);
+  margin-bottom: 35px;
+  max-width: 580px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 35px;
+  margin-top: 45px;
+  padding-top: 30px;
+  border-top: 1px solid var(--pc-border);
+}
+.stat-item h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--pc-primary);
+  margin-bottom: 4px;
+}
+.stat-item p {
+  font-size: 0.85rem;
+  color: var(--pc-muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Course Cards
+-------------------------------------------------------------------------- */
+.course-card {
+  background: #ffffff;
+  border: 1px solid var(--pc-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--pc-shadow-sm);
+}
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--pc-shadow-xl);
+  border-color: rgba(79, 70, 229, 0.3);
+}
+.course-card-header {
+  padding: 24px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid var(--pc-border);
+  position: relative;
+}
+.course-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--pc-primary);
+  box-shadow: var(--pc-shadow-md);
+  margin-bottom: 16px;
+}
+.course-badge-level {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--pc-border);
+}
+.course-card-body {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.course-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--pc-dark);
+}
+.course-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: var(--pc-muted);
+  margin-bottom: 16px;
+}
+.course-card-footer {
+  padding: 18px 24px;
+  border-top: 1px solid var(--pc-border);
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.course-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--pc-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Category Pill Filters
+-------------------------------------------------------------------------- */
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.category-pill-btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--pc-border);
+  background: #ffffff;
+  color: var(--pc-slate);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.category-pill-btn:hover, .category-pill-btn.active {
+  background: var(--pc-primary);
+  color: #ffffff;
+  border-color: var(--pc-primary);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Section Styling & Feature Cards
+-------------------------------------------------------------------------- */
+.section-padding {
+  padding: 80px 0;
+}
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+.section-title {
+  font-size: 2.3rem;
+  margin-bottom: 14px;
+}
+.section-subtitle {
+  color: var(--pc-muted);
+  font-size: 1.05rem;
+}
+
+.feature-box {
+  background: #ffffff;
+  padding: 35px 25px;
+  border-radius: 16px;
+  border: 1px solid var(--pc-border);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--pc-shadow-lg);
+  border-color: rgba(79, 70, 229, 0.25);
+}
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: var(--pc-primary-light);
+  color: var(--pc-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 22px;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+-------------------------------------------------------------------------- */
+.footer-main {
+  background: var(--pc-dark);
+  color: #cbd5e1;
+  padding: 70px 0 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-main h5 {
+  color: #ffffff;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+}
+.footer-main a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.footer-main a:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 50px;
+  padding-top: 25px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .hero-title {
+    font-size: 2.4rem;
+  }
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

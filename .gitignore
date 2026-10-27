@@ -1,0 +1,20 @@
+# Binaries & portable runtime
+php/
+*.exe
+*.dll
+*.zip
+
+# Reference assets & local extraction
+reference_disha/
+
+# Environment and local configs
+.env
+config/db.local.php
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log
