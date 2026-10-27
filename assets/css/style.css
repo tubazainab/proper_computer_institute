@@ -363,13 +363,118 @@ h1, h2, h3, h4, h5, h6 {
   color: #64748b;
 }
 
-/* Responsive adjustments */
-@media (max-width: 991px) {
+/* ==============================================================================
+   Mobile & Tablet Responsiveness Enhancements
+   ============================================================================== */
+.cat-scroll-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 4px 14px 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.cat-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.cat-scroll-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.cat-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 991.98px) {
+  .hero-section {
+    padding: 60px 0 50px;
+    text-align: center;
+  }
   .hero-title {
-    font-size: 2.4rem;
+    font-size: 2.3rem;
   }
   .hero-stats {
-    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
+    margin-top: 30px;
+  }
+  .hero-badge-live {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .navbar-nav {
+    padding: 16px 0;
+    gap: 8px;
+  }
+  .navbar-collapse {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    margin-top: 12px;
   }
 }
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 1.95rem;
+    line-height: 1.25;
+  }
+  .hero-lead {
+    font-size: 1rem;
+  }
+  .stat-card-num {
+    font-size: 1.75rem;
+  }
+  .stat-card-label {
+    font-size: 0.8rem;
+  }
+  .section-title {
+    font-size: 1.7rem;
+  }
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+  .course-card {
+    margin-bottom: 20px;
+  }
+  .feature-box {
+    padding: 24px 20px;
+  }
+  .top-bar-contact {
+    display: none !important;
+  }
+  .top-bar {
+    text-align: center;
+  }
+  .btn-pc-primary, .btn-pc-secondary {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+  .course-card-body {
+    padding: 18px;
+  }
+  .course-card-footer {
+    padding: 14px 18px;
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px;
+  }
+  .course-card-footer .btn {
+    width: 100%;
+  }
+}
+

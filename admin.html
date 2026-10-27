@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Proper Computer — Admin ERP &amp; Management System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/print.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        .admin-view-panel {
+            display: none;
+        }
+        .admin-view-panel.active {
+            display: block;
+        }
+        .receipt-card-preview {
+            border: 2px dashed #4f46e5;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+        .receipt-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 3.5rem;
+            color: rgba(79, 70, 229, 0.05);
+            font-weight: 900;
+            white-space: nowrap;
+            pointer-events: none;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body class="admin-body-bg">
+
+<!-- Mobile Sidebar Backdrop Overlay -->
+<div class="admin-sidebar-backdrop" id="sidebarBackdrop" onclick="toggleAdminSidebar()"></div>
+
+<!-- Admin Sidebar (Mobile Slide-In Drawer) -->
+<aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-brand d-flex align-items-center justify-content-between">
+        <a href="admin.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <img src="assets/images/logo.svg" alt="Proper Computer" height="34">
+            <div>
+                <span class="sidebar-brand-name">PROPER COMPUTER</span>
+                <span class="sidebar-brand-sub">INSTITUTE ERP SYSTEM</span>
+            </div>
+        </a>
+        <button class="btn btn-sm text-white-50 d-lg-none" onclick="toggleAdminSidebar()">
+            <i class="fas fa-times fa-lg"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section-title">MAIN NAVIGATION</div>
+        <a href="javascript:void(0)" class="sidebar-link active" onclick="switchAdminTab('dashboardView', this)">
+            <i class="fas fa-gauge"></i> <span>Dashboard</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('enquiriesView', this)">
+            <i class="fas fa-comments"></i> <span>All Enquiries</span>
+            <span class="badge bg-danger rounded-pill ms-auto small">12</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('admissionsView', this)">
+            <i class="fas fa-user-graduate"></i> <span>Student Admissions</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('receiptsView', this)">
+            <i class="fas fa-receipt"></i> <span>Print Receipts &amp; Fees</span>
+        </a>
+
+        <div class="nav-section-title">MANAGEMENT &amp; HR</div>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('employeesView', this)">
+            <i class="fas fa-users-gear"></i> <span>Employee Profiles</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('reportsView', this)">
+            <i class="fas fa-chart-line"></i> <span>Targets &amp; Reports</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="switchAdminTab('coursesView', this)">
+            <i class="fas fa-book-open"></i> <span>Courses Master</span>
+        </a>
+
+        <div class="nav-section-title">PORTAL SWITCH</div>
+        <a href="index.html" class="sidebar-link text-warning fw-semibold">
+            <i class="fas fa-globe"></i> <span>Public User Website &rarr;</span>
+        </a>
+        <a href="index.html#studentPortalSection" class="sidebar-link text-info">
+            <i class="fas fa-user-check"></i> <span>Student Self-Service &rarr;</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Wrapper -->
+<div class="admin-main">
+    
+    <!-- Admin Top Header (Mobile Responsive) -->
+    <header class="admin-header">
+        <div class="d-flex align-items-center gap-2">
+            <!-- Mobile Hamburger Toggle -->
+            <button class="btn btn-light border-0 d-lg-none p-2 rounded-3 text-primary" id="sidebarToggleBtn" onclick="toggleAdminSidebar()">
+                <i class="fas fa-bars-staggered fa-lg"></i>
+            </button>
+            <h1 class="header-title d-none d-sm-block mb-0" id="currentSectionTitle">Admin Dashboard</h1>
+            <span class="badge bg-primary-subtle text-primary fw-semibold d-sm-none">ERP Panel</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 gap-sm-3">
+            <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold d-none d-md-inline-flex align-items-center gap-1">
+                <i class="fas fa-external-link-alt"></i> Public Website
+            </a>
+
+            <div class="header-date-badge d-none d-md-flex align-items-center gap-2">
+                <i class="far fa-calendar-alt text-primary"></i>
+                <span class="small fw-semibold" id="headerDateStr">27 Oct 2026</span>
+            </div>
+
+            <div class="position-relative">
+                <button class="btn btn-light rounded-circle p-2" title="Notifications">
+                    <i class="far fa-bell text-muted"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                </button>
+            </div>
+
+            <!-- Admin Profile -->
+            <div class="d-flex align-items-center gap-2 ps-2 border-start">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width:36px; height:36px; font-size:0.85rem;">
+                    PC
+                </div>
+                <div class="d-none d-sm-block">
+                    <strong class="d-block small text-dark lh-1">Admin Manager</strong>
+                    <span class="text-success small" style="font-size:0.7rem;"><i class="fas fa-circle fa-2xs"></i> Online</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Content Area -->
+    <div class="admin-body">
+
+        <!-- ============================================================== -->
+        <!-- VIEW 1: DISHA DASHBOARD FRONT PAGE                             -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel active" id="dashboardView">
+            
+            <!-- Disha Reference Monthly Status Card (Purple Arc Header) -->
+            <div class="card card-status-monthly mb-3">
+                <div class="card-status-header">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-calendar-check fa-lg"></i>
+                            <h2 class="card-status-title mb-0">Monthly Status (October 2026)</h2>
+                        </div>
+                        <span class="badge bg-white text-dark fw-bold px-3 py-1">Proper Computer Institute</span>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-val text-primary">42</div>
+                        <div class="status-lbl">TOTAL ADMISSION</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-success">₹4,85,000</div>
+                        <div class="status-lbl">TOTAL COLLECTION</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-info">₹6,50,000</div>
+                        <div class="status-lbl">TOTAL BILLING</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-warning">87</div>
+                        <div class="status-lbl">TOTAL ENQUIRIES</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disha Reference Daily Status Card (Teal Header) -->
+            <div class="card card-status-daily mb-4">
+                <div class="card-status-header">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-clock fa-lg"></i>
+                            <h2 class="card-status-title mb-0">Daily Operational Status</h2>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="date" class="form-control form-control-sm border-0 rounded-pill px-3" value="2026-10-27" style="font-weight:600;">
+                        </div>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-val">3</div>
+                        <div class="status-lbl">TODAY'S ADMISSIONS</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-success">₹35,000</div>
+                        <div class="status-lbl">TODAY'S COLLECTION</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-primary">7</div>
+                        <div class="status-lbl">NEW ENQUIRIES</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-val text-danger">12</div>
+                        <div class="status-lbl">FOLLOW-UPS DUE</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pastel Quick Links Section (from Disha reference: Front_page_oct26.png) -->
+            <div class="mb-4">
+                <h5 class="fw-bold mb-3 text-dark"><i class="fas fa-bolt text-warning me-2"></i> Quick Action Links</h5>
+                <div class="quick-links-grid">
+                    <div class="quick-link-card ql-rose" onclick="switchAdminTab('admissionsView')">
+                        <div class="ql-icon"><i class="fas fa-user-plus"></i></div>
+                        <div class="ql-text">New Admission</div>
+                    </div>
+                    <div class="quick-link-card ql-lavender" onclick="switchAdminTab('enquiriesView')">
+                        <div class="ql-icon"><i class="fas fa-comments"></i></div>
+                        <div class="ql-text">Enquiry Desk</div>
+                    </div>
+                    <div class="quick-link-card ql-mint" onclick="switchAdminTab('receiptsView')">
+                        <div class="ql-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+                        <div class="ql-text">Fee Collection</div>
+                    </div>
+                    <div class="quick-link-card ql-peach" onclick="switchAdminTab('receiptsView')">
+                        <div class="ql-icon"><i class="fas fa-print"></i></div>
+                        <div class="ql-text">Print Receipt</div>
+                    </div>
+                    <div class="quick-link-card ql-sky" onclick="switchAdminTab('reportsView')">
+                        <div class="ql-icon"><i class="fas fa-chart-column"></i></div>
+                        <div class="ql-text">Student Reports</div>
+                    </div>
+                    <div class="quick-link-card ql-lemon" onclick="switchAdminTab('reportsView')">
+                        <div class="ql-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="ql-text">Target vs Actual</div>
+                    </div>
+                    <div class="quick-link-card ql-rose" onclick="switchAdminTab('employeesView')">
+                        <div class="ql-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="ql-text">Employee Profiles</div>
+                    </div>
+                    <div class="quick-link-card ql-mint" onclick="alert('Today Attendance: 14 Present, 1 On Leave')">
+                        <div class="ql-icon"><i class="fas fa-clipboard-user"></i></div>
+                        <div class="ql-text">Daily Attendance</div>
+                    </div>
+                    <div class="quick-link-card ql-lavender" onclick="switchAdminTab('coursesView')">
+                        <div class="ql-icon"><i class="fas fa-book"></i></div>
+                        <div class="ql-text">65+ Courses</div>
+                    </div>
+                    <div class="quick-link-card ql-sky" onclick="window.open('index.html', '_blank')">
+                        <div class="ql-icon"><i class="fas fa-globe"></i></div>
+                        <div class="ql-text">Public Website</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section (Responsive) -->
+            <div class="row g-3 mb-4">
+                <div class="col-lg-8">
+                    <div class="admin-card">
+                        <div class="admin-card-header d-flex justify-content-between align-items-center">
+                            <span class="admin-card-title"><i class="fas fa-chart-bar text-primary me-2"></i> Monthly Target vs Admissions (2026)</span>
+                            <span class="badge bg-primary-subtle text-primary">Monthly Trend</span>
+                        </div>
+                        <div class="admin-card-body">
+                            <div style="height: 270px; position: relative;">
+                                <canvas id="adminTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="admin-card">
+                        <div class="admin-card-header d-flex justify-content-between align-items-center">
+                            <span class="admin-card-title"><i class="fas fa-chart-pie text-success me-2"></i> Enrollments by Domain</span>
+                        </div>
+                        <div class="admin-card-body">
+                            <div style="height: 270px; position: relative;">
+                                <canvas id="adminDoughnutChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Enquiries Desk -->
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <span class="admin-card-title"><i class="fas fa-clock-rotate-left text-primary me-2"></i> Recent Student Leads &amp; Enquiries</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="switchAdminTab('enquiriesView')">View All Enquiries &rarr;</button>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="table-responsive-touch">
+                        <table class="table admin-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Enquiry ID</th>
+                                    <th>Candidate Name</th>
+                                    <th>Course Domain</th>
+                                    <th>Source</th>
+                                    <th>Next Followup</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="fw-semibold">ENQ-2026-104</span></td>
+                                    <td>
+                                        <div class="table-student-name">Simran Kaur</div>
+                                        <span class="table-student-phone">+91 98112 34567</span>
+                                    </td>
+                                    <td>Python Data Science &amp; AI</td>
+                                    <td><span class="badge bg-light text-dark border">Walk-in</span></td>
+                                    <td><span class="text-danger fw-semibold">Today (27 Oct)</span></td>
+                                    <td><span class="badge bg-warning-subtle text-warning">Hot Lead</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="alert('Opening lead converter...')">Convert</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="fw-semibold">ENQ-2026-103</span></td>
+                                    <td>
+                                        <div class="table-student-name">Vikram Aditya</div>
+                                        <span class="table-student-phone">+91 97234 56789</span>
+                                    </td>
+                                    <td>Full Stack Web Development</td>
+                                    <td><span class="badge bg-light text-dark border">Website</span></td>
+                                    <td>28 Oct 2026</td>
+                                    <td><span class="badge bg-info-subtle text-info">Warm</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="alert('Opening lead converter...')">Convert</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="fw-semibold">ENQ-2026-102</span></td>
+                                    <td>
+                                        <div class="table-student-name">Pooja Verma</div>
+                                        <span class="table-student-phone">+91 98450 12345</span>
+                                    </td>
+                                    <td>UI / UX Design &amp; Figma</td>
+                                    <td><span class="badge bg-light text-dark border">Telephonic</span></td>
+                                    <td>29 Oct 2026</td>
+                                    <td><span class="badge bg-success-subtle text-success">Converted</span></td>
+                                    <td>
+                                        <span class="badge bg-success">Admitted</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 2: ALL ENQUIRIES DESK                                     -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="enquiriesView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <span class="admin-card-title"><i class="fas fa-list-check text-primary me-2"></i> Enquiry Management Register</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="alert('Open Add Enquiry Modal')">
+                        <i class="fas fa-plus me-1"></i> Add Walk-in Enquiry
+                    </button>
+                </div>
+                <div class="p-3 border-bottom bg-light">
+                    <!-- Disha Pill Tabs -->
+                    <div class="admin-pill-tabs">
+                        <button class="admin-pill-tab active">All Enquiry (87)</button>
+                        <button class="admin-pill-tab">FollowUps (18)</button>
+                        <button class="admin-pill-tab">Visits (12)</button>
+                        <button class="admin-pill-tab">Reminders (6)</button>
+                        <button class="admin-pill-tab">Converted (42)</button>
+                    </div>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="table-responsive-touch">
+                        <table class="table admin-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Form No</th>
+                                    <th>Candidate</th>
+                                    <th>Course Track</th>
+                                    <th>Counselor</th>
+                                    <th>Lead Source</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>PC-ENQ-089</strong></td>
+                                    <td>
+                                        <div class="table-student-name">Ankit Roy</div>
+                                        <span class="table-student-phone">+91 98321 09876</span>
+                                    </td>
+                                    <td>Certified Ethical Hacker (CEH)</td>
+                                    <td>Sunil Sir</td>
+                                    <td>Walk-in</td>
+                                    <td><span class="badge bg-warning-subtle text-warning">Hot Lead</span></td>
+                                    <td><button class="btn btn-sm btn-pc-primary" onclick="alert('Converting Ankit Roy to Admission...')">Enroll Student</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PC-ENQ-088</strong></td>
+                                    <td>
+                                        <div class="table-student-name">Deepika Sen</div>
+                                        <span class="table-student-phone">+91 97123 45678</span>
+                                    </td>
+                                    <td>Digital Marketing &amp; SEO</td>
+                                    <td>Pooja Ma'am</td>
+                                    <td>Instagram Ad</td>
+                                    <td><span class="badge bg-info-subtle text-info">Warm</span></td>
+                                    <td><button class="btn btn-sm btn-pc-primary" onclick="alert('Converting Deepika Sen to Admission...')">Enroll Student</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PC-ENQ-087</strong></td>
+                                    <td>
+                                        <div class="table-student-name">Mohd. Farhan</div>
+                                        <span class="table-student-phone">+91 99234 56789</span>
+                                    </td>
+                                    <td>Financial Modelling &amp; Valuation</td>
+                                    <td>Sunil Sir</td>
+                                    <td>Telephonic</td>
+                                    <td><span class="badge bg-success-subtle text-success">Admitted</span></td>
+                                    <td><span class="badge bg-success">Enrolled</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 3: ADMISSIONS REGISTRY                                    -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="admissionsView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="admin-card-title"><i class="fas fa-graduation-cap text-primary me-2"></i> All Student Admissions Registry</span>
+                    <button class="btn btn-sm btn-success rounded-pill px-3" onclick="alert('Opening New Admission Form...')">
+                        <i class="fas fa-user-plus me-1"></i> Register New Student
+                    </button>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="table-responsive-touch">
+                        <table class="table admin-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Admission No</th>
+                                    <th>Student Name</th>
+                                    <th>Course Enrolled</th>
+                                    <th>Batch / Teacher</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid</th>
+                                    <th>Due Balance</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="text-primary">PC-ADM-2026-001</strong></td>
+                                    <td>
+                                        <div class="table-student-name">Aarav Patel</div>
+                                        <span class="table-student-phone">+91 98765 43210</span>
+                                    </td>
+                                    <td>Full Stack Web Development</td>
+                                    <td>Morning (10 AM) / Amit Sir</td>
+                                    <td>₹25,000</td>
+                                    <td class="text-success fw-bold">₹15,000</td>
+                                    <td class="text-danger fw-bold">₹10,000</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="switchAdminTab('receiptsView')">
+                                            <i class="fas fa-receipt me-1"></i> Pay Fee
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="text-primary">PC-ADM-2026-002</strong></td>
+                                    <td>
+                                        <div class="table-student-name">Priya Nair</div>
+                                        <span class="table-student-phone">+91 98234 11223</span>
+                                    </td>
+                                    <td>Data Science &amp; Machine Learning</td>
+                                    <td>Evening (5 PM) / Neha Ma'am</td>
+                                    <td>₹30,000</td>
+                                    <td class="text-success fw-bold">₹30,000</td>
+                                    <td class="text-muted fw-bold">₹0</td>
+                                    <td>
+                                        <span class="badge bg-success-subtle text-success">Cleared</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 4: OFFICIAL PRINTABLE RECEIPT                             -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="receiptsView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="admin-card-title"><i class="fas fa-receipt text-primary me-2"></i> Official Fee Receipt &amp; Voucher Desk</span>
+                    <button class="btn btn-sm btn-dark rounded-pill px-3" onclick="window.print()">
+                        <i class="fas fa-print me-1"></i> Print Official Receipt
+                    </button>
+                </div>
+                <div class="admin-card-body p-4">
+                    <!-- Formal Printable Receipt Layout -->
+                    <div class="receipt-card-preview mx-auto" style="max-width: 780px;">
+                        <div class="receipt-watermark">PROPER COMPUTER</div>
+
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3 flex-wrap gap-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="assets/images/logo.svg" alt="Proper Computer" height="42">
+                                <div>
+                                    <h4 class="fw-bold mb-0 text-dark">PROPER COMPUTER</h4>
+                                    <small class="text-muted text-uppercase" style="font-size:0.75rem; letter-spacing:0.5px;">Computer Institute &amp; IT Training Center</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary px-3 py-1 fs-6">FEE RECEIPT</span>
+                                <div class="small text-muted mt-1">Receipt No: <strong>PC-REC-2026-042</strong></div>
+                                <div class="small text-muted">Date: <strong>27-Oct-2026</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <div class="small text-muted">STUDENT NAME</div>
+                                <div class="fw-bold fs-6 text-dark">Aarav Patel</div>
+                                <div class="small text-muted">Roll No: <strong>PC-2026-089</strong></div>
+                                <div class="small text-muted">Phone: +91 98765 43210</div>
+                            </div>
+                            <div class="col-sm-6 text-sm-end">
+                                <div class="small text-muted">COURSE ENROLLED</div>
+                                <div class="fw-bold fs-6 text-primary">Full Stack Web Development</div>
+                                <div class="small text-muted">Batch: 10:00 AM - 12:00 PM (Classroom)</div>
+                                <div class="small text-muted">Instructor: Amit Sharma Sir</div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Description</th>
+                                        <th class="text-center">Total Fee</th>
+                                        <th class="text-center">Prev Paid</th>
+                                        <th class="text-center">Amount Received</th>
+                                        <th class="text-end">Balance Due</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tuition Fee (Installment 2)</td>
+                                        <td class="text-center">₹25,000</td>
+                                        <td class="text-center">₹5,000</td>
+                                        <td class="text-center fw-bold text-success fs-6">₹10,000</td>
+                                        <td class="text-end fw-bold text-danger fs-6">₹10,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row align-items-center mb-4">
+                            <div class="col-sm-7">
+                                <div class="small text-muted">PAYMENT MODE: <strong class="text-dark">UPI / GooglePay (Ref: UPI-99824192)</strong></div>
+                                <div class="small text-muted">AMOUNT IN WORDS: <strong class="text-dark">Rupees Ten Thousand Only</strong></div>
+                            </div>
+                            <div class="col-sm-5 text-sm-end">
+                                <div class="p-2 bg-light rounded text-center d-inline-block border">
+                                    <small class="d-block text-muted">TOTAL RECEIVED</small>
+                                    <strong class="fs-4 text-success">₹10,000</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-end pt-3 border-top">
+                            <div>
+                                <small class="text-muted d-block">&bull; Fee once paid is non-refundable.</small>
+                                <small class="text-muted d-block">&bull; System generated receipt with digital validation.</small>
+                            </div>
+                            <div class="text-center">
+                                <div style="height:35px;"></div>
+                                <div class="border-top px-4 pt-1 fw-bold small text-dark">Authorized Signatory<br><small class="text-muted">Proper Computer</small></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 5: EMPLOYEE MANAGEMENT                                    -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="employeesView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="admin-card-title"><i class="fas fa-users-gear text-primary me-2"></i> Employee &amp; Trainer Profiles</span>
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="alert('Adding employee...')">
+                        <i class="fas fa-user-plus me-1"></i> Add Employee
+                    </button>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 border rounded-3 h-100">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="rounded-circle bg-primary text-white p-3 fw-bold fs-5">AS</div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0">Amit Sharma</h6>
+                                        <small class="text-muted">Senior Full Stack Trainer</small>
+                                    </div>
+                                    <span class="badge bg-success ms-auto">Active</span>
+                                </div>
+                                <p class="small text-muted mb-2">Specialization: React, Node.js, Python, System Architecture</p>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top small">
+                                    <span>Salary: <strong>₹45,000/mo</strong></span>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="alert('Generating Payslip for Amit Sharma...')">Payslip</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 border rounded-3 h-100">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="rounded-circle bg-info text-white p-3 fw-bold fs-5">NP</div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0">Neha Patel</h6>
+                                        <small class="text-muted">Data Science Lead</small>
+                                    </div>
+                                    <span class="badge bg-success ms-auto">Active</span>
+                                </div>
+                                <p class="small text-muted mb-2">Specialization: Machine Learning, PyTorch, Power BI, SQL</p>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top small">
+                                    <span>Salary: <strong>₹50,000/mo</strong></span>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="alert('Generating Payslip for Neha Patel...')">Payslip</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 border rounded-3 h-100">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="rounded-circle bg-warning text-white p-3 fw-bold fs-5">SK</div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0">Sunil Kumar</h6>
+                                        <small class="text-muted">Academic Counselor &amp; Admin</small>
+                                    </div>
+                                    <span class="badge bg-success ms-auto">Active</span>
+                                </div>
+                                <p class="small text-muted mb-2">Specialization: Admissions, Lead Pipelines, Student Counseling</p>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top small">
+                                    <span>Salary: <strong>₹32,000/mo</strong></span>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="alert('Generating Payslip for Sunil Kumar...')">Payslip</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 6: TARGET VS ACHIEVEMENTS (REPORTS)                       -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="reportsView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="admin-card-title"><i class="fas fa-chart-line text-primary me-2"></i> Monthly Target vs Achievements (DMR Report)</span>
+                    <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="alert('Exporting Report as CSV...')">
+                        <i class="fas fa-file-excel me-1"></i> Export to CSV
+                    </button>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="table-responsive-touch">
+                        <table class="table admin-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Admission Target</th>
+                                    <th>Actual Admissions</th>
+                                    <th>Achievement %</th>
+                                    <th>Revenue Target</th>
+                                    <th>Actual Revenue</th>
+                                    <th>Financial %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>October 2026</strong></td>
+                                    <td>40</td>
+                                    <td class="text-primary fw-bold">42</td>
+                                    <td><span class="badge bg-success">105%</span></td>
+                                    <td>₹5,00,000</td>
+                                    <td class="text-success fw-bold">₹4,85,000</td>
+                                    <td><span class="badge bg-info">97%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>September 2026</strong></td>
+                                    <td>50</td>
+                                    <td class="text-primary fw-bold">48</td>
+                                    <td><span class="badge bg-success">96%</span></td>
+                                    <td>₹6,00,000</td>
+                                    <td class="text-success fw-bold">₹5,75,000</td>
+                                    <td><span class="badge bg-info">95.8%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>August 2026</strong></td>
+                                    <td>40</td>
+                                    <td class="text-primary fw-bold">37</td>
+                                    <td><span class="badge bg-warning">92.5%</span></td>
+                                    <td>₹4,50,000</td>
+                                    <td class="text-success fw-bold">₹4,30,000</td>
+                                    <td><span class="badge bg-info">95.5%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 7: COURSES MASTER MANAGEMENT                              -->
+        <!-- ============================================================== -->
+        <div class="admin-view-panel" id="coursesView">
+            <div class="admin-card mb-4">
+                <div class="admin-card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="admin-card-title"><i class="fas fa-book-open text-primary me-2"></i> All 65+ Courses Catalogue Master</span>
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="alert('Adding course...')">
+                        <i class="fas fa-plus me-1"></i> Add Course
+                    </button>
+                </div>
+                <div class="admin-card-body p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted small">65 courses configured across 7 domains with syllabi and fees</span>
+                        <a href="index.html#coursesSection" target="_blank" class="btn btn-sm btn-outline-primary">Preview in Public Website &rarr;</a>
+                    </div>
+                    <div class="alert alert-info py-2 small">
+                        <i class="fas fa-info-circle me-1"></i> All courses listed in the database can be edited, activated, or price-adjusted by administrators.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap 5 Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Sidebar Mobile Drawer Toggle
+function toggleAdminSidebar() {
+    const sidebar = document.getElementById('adminSidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (sidebar && backdrop) {
+        sidebar.classList.toggle('show');
+        backdrop.classList.toggle('show');
+    }
+}
+
+// Admin Tab View Switcher
+function switchAdminTab(viewId, linkEl) {
+    document.querySelectorAll('.admin-view-panel').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+
+    const target = document.getElementById(viewId);
+    if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (linkEl) {
+        linkEl.classList.add('active');
+    }
+
+    // Auto close sidebar on mobile when nav link clicked
+    if (window.innerWidth < 992) {
+        const sidebar = document.getElementById('adminSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar && backdrop) {
+            sidebar.classList.remove('show');
+            backdrop.classList.remove('show');
+        }
+    }
+
+    // Update Top Title
+    const titles = {
+        dashboardView: "Admin Dashboard",
+        enquiriesView: "All Enquiries & Leads",
+        admissionsView: "Student Admissions Registry",
+        receiptsView: "Fee Payment & Official Receipts",
+        employeesView: "Employee Profiles & Payroll",
+        reportsView: "Target vs Achievements & DMR",
+        coursesView: "Course Master Catalogue"
+    };
+    const titleEl = document.getElementById('currentSectionTitle');
+    if (titleEl && titles[viewId]) {
+        titleEl.textContent = titles[viewId];
+    }
+}
+
+// Chart.js initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Trend Bar Chart
+    const trendEl = document.getElementById('adminTrendChart');
+    if (trendEl) {
+        new Chart(trendEl, {
+            type: 'bar',
+            data: {
+                labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                datasets: [
+                    { label: 'Target', data: [50, 35, 35, 40, 50, 40], backgroundColor: '#e2e8f0', borderRadius: 6 },
+                    { label: 'Actual Admissions', data: [42, 38, 32, 37, 48, 42], backgroundColor: '#4f46e5', borderRadius: 6 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // Domain Doughnut Chart
+    const donutEl = document.getElementById('adminDoughnutChart');
+    if (donutEl) {
+        new Chart(donutEl, {
+            type: 'doughnut',
+            data: {
+                labels: ['Programming', 'Data & AI', 'Design', 'Cybersecurity', 'Marketing', 'Finance'],
+                datasets: [{
+                    data: [35, 24, 18, 15, 12, 8],
+                    backgroundColor: ['#4f46e5', '#06b6d4', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
