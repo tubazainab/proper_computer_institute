@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proper Computer — Institute Management System &amp; Public Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/print.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        .system-nav-bar {
+            background: #0f172a;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 2px solid #4f46e5;
+        }
+        .nav-pill-btn {
+            color: #94a3b8;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-pill-btn:hover, .nav-pill-btn.active {
+            color: #ffffff;
+            background: #4f46e5;
+            border-color: #6366f1;
+        }
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Global System Navigation Bar -->
+<header class="system-nav-bar text-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-primary text-white rounded p-1 d-inline-flex"><i class="fas fa-laptop-code"></i></div>
+        <strong style="font-family:'Outfit',sans-serif; letter-spacing:0.5px;">PROPER COMPUTER BROWSER SHOWCASE</strong>
+        <span class="badge bg-success-subtle text-success small ms-2">LIVE APP READY</span>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+        <button class="nav-pill-btn active" onclick="switchView('publicHome', this)"><i class="fas fa-globe"></i> Public Website</button>
+        <button class="nav-pill-btn" onclick="switchView('coursesCatalogue', this)"><i class="fas fa-book-open"></i> 65+ Courses</button>
+        <button class="nav-pill-btn" onclick="switchView('adminDashboard', this)"><i class="fas fa-gauge"></i> Admin Dashboard</button>
+        <button class="nav-pill-btn" onclick="switchView('adminEnquiries', this)"><i class="fas fa-user-tag"></i> Enquiries</button>
+        <button class="nav-pill-btn" onclick="switchView('adminAdmissions', this)"><i class="fas fa-graduation-cap"></i> Admissions</button>
+        <button class="nav-pill-btn" onclick="switchView('adminReceipts', this)"><i class="fas fa-receipt"></i> Receipts &amp; Print</button>
+        <button class="nav-pill-btn" onclick="switchView('adminEmployees', this)"><i class="fas fa-users"></i> Employees &amp; Payslips</button>
+        <button class="nav-pill-btn" onclick="switchView('adminReports', this)"><i class="fas fa-chart-line"></i> Reports (DMR)</button>
+        <button class="nav-pill-btn text-warning" onclick="switchView('xamppGuide', this)"><i class="fas fa-server"></i> XAMPP Setup</button>
+    </div>
+</header>
+
+<!-- =========================================================================
+     VIEW 1: PUBLIC WEBSITE HOMEPAGE
+     ========================================================================= -->
+<section id="publicHome" class="view-section active">
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <i class="fas fa-phone-alt text-warning me-1"></i> +91 98223 34455 / +91 70200 31922 &nbsp;|&nbsp;
+                <i class="fas fa-envelope text-info me-1"></i> info@propercomputer.com
+            </div>
+            <div>
+                <span class="badge bg-danger rounded-pill me-2">Admissions Open 2026</span>
+                <span class="text-white-50 small">Proper Computer Academy, Kamptee / Nagpur</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Public Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-main">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#publicHome">
+                <img src="assets/images/logo.svg" alt="Proper Computer" style="height: 48px;">
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="javascript:void(0)" onclick="switchView('coursesCatalogue')" class="nav-link fw-semibold">All Courses (65+)</a>
+                <a href="javascript:void(0)" onclick="switchView('adminDashboard')" class="btn btn-outline-primary btn-sm"><i class="fas fa-lock me-1"></i> Staff Login</a>
+                <a href="javascript:void(0)" onclick="switchView('coursesCatalogue')" class="btn btn-pc-primary btn-sm"><i class="fas fa-paper-plane me-1"></i> Apply Online</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7">
+                    <div class="hero-badge">
+                        <i class="fas fa-certificate me-2 text-warning"></i> Government Recognized &amp; ISO Certified IT Training
+                    </div>
+                    <h1 class="hero-title">
+                        Accelerate Your Tech Career with <span class="text-primary">Proper Computer</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Gain job-ready skills through <strong>65+ hands-on courses</strong> in Full Stack Web Development, Artificial Intelligence, Data Analytics, Cybersecurity, UI/UX Design, and Financial Modeling.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button class="btn btn-pc-primary btn-lg" onclick="switchView('coursesCatalogue')">
+                            <i class="fas fa-graduation-cap me-2"></i> Explore All 65+ Courses
+                        </button>
+                        <button class="btn btn-pc-outline btn-lg" onclick="switchView('adminDashboard')">
+                            <i class="fas fa-gauge me-2"></i> Open Management Dashboard
+                        </button>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>65+</h3>
+                            <p>Specialized Courses</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Practical Lab Training</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>5,000+</h3>
+                            <p>Graduated Alumni</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>94%</h3>
+                            <p>Placement Support</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card shadow-xl border-0 rounded-4 overflow-hidden p-4 bg-white" style="border:1px solid var(--pc-border)!important;">
+                        <div class="text-center mb-3">
+                            <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-2">QUICK ENQUIRY</span>
+                            <h4 class="fw-bold mb-1">Book a Free Demo Class</h4>
+                            <p class="text-muted small">Talk to our faculty and get an expert syllabus walkthrough.</p>
+                        </div>
+
+                        <form onsubmit="alert('Enquiry submitted successfully! Counselor will follow up.'); return false;">
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold text-muted">Your Full Name</label>
+                                <input type="text" class="form-control bg-light" placeholder="e.g. Shafeen Sheikh" value="Shafeen Sheikh" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold text-muted">Mobile Number</label>
+                                <input type="tel" class="form-control bg-light" placeholder="e.g. 7020031922" value="7020031922" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold text-muted">Select Course of Interest</label>
+                                <select class="form-select bg-light">
+                                    <option>Web Development with PHP/MySQL</option>
+                                    <option>MERN Stack</option>
+                                    <option>Python &amp; DSA</option>
+                                    <option>Data Science &amp; Machine Learning</option>
+                                    <option>UI/UX Design with Figma</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-pc-primary w-100 py-3 fw-bold">
+                                <i class="fas fa-paper-plane me-2"></i> Submit Admission Enquiry
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section-padding bg-dark text-white">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold mb-3">WHY PROPER COMPUTER</span>
+                    <h2 class="text-white fw-bold mb-4" style="font-size: 2.2rem;">Engineered for Career Outcomes, Not Just Theory</h2>
+                    <p class="text-white-50 mb-4">Every student works on production-grade projects, receives 1-on-1 mentorship from industry veterans, and graduates with an impressive portfolio.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                                <i class="fas fa-laptop-code fs-1 text-primary mb-3"></i>
+                                <h5 class="fw-bold text-white mb-2">Modern IT Labs</h5>
+                                <p class="text-white-50 small mb-0">High-speed dual-monitor workstations equipped with professional software suites.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                                <i class="fas fa-certificate fs-1 text-warning mb-3"></i>
+                                <h5 class="fw-bold text-white mb-2">Recognized Certification</h5>
+                                <p class="text-white-50 small mb-0">Verifiable certificates recognized by IT firms, MNCs, and government bodies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-- =========================================================================
+     VIEW 2: ALL 65+ COURSES CATALOGUE (WITH LIVE SEARCH & CATEGORY FILTERS)
+     ========================================================================= -->
+<section id="coursesCatalogue" class="view-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold mb-2">COMPLETE DIRECTORY</span>
+            <h2 class="fw-bold" style="font-size:2.5rem;">65+ Courses Catalogue</h2>
+            <p class="text-muted lead max-w-700 mx-auto">Explore all 65+ certified courses stored in the database. Use live search or domain filters.</p>
+        </div>
+
+        <div class="card border rounded-4 p-4 mb-4 shadow-sm bg-white">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                        <input type="text" id="liveSearchInput" class="form-control bg-light border-start-0" placeholder="Type to filter courses (e.g. MERN, Python, Canva, AWS, Flutter, Java)..." oninput="filterDemoCourses()">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex flex-wrap gap-1" id="categoryPillContainer">
+                        <button class="btn btn-sm btn-primary active cat-btn" onclick="filterByCat('all', this)">All (65)</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Programming', this)">Programming</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Data', this)">Data &amp; AI</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Cybersecurity', this)">Cybersecurity</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Design', this)">Design &amp; Video</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Marketing', this)">Marketing</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Finance', this)">Finance</button>
+                        <button class="btn btn-sm btn-outline-secondary cat-btn" onclick="filterByCat('Blockchain', this)">Blockchain</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4" id="courseCardsRow">
+            <!-- Dynamically populated by JS with all 65+ courses -->
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 3: ADMIN DASHBOARD (FAITHFUL TO REFERENCE SCREENSHOT)
+     ========================================================================= -->
+<section id="adminDashboard" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <!-- Top Banner matching Screenshot -->
+        <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded-3 border mb-4 shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+                <img src="assets/images/logo.svg" alt="Proper Computer" style="height: 38px;">
+                <div class="topbar-welcome"><i class="fas fa-hand-wave text-warning me-1"></i> Welcome Tuba Zainab!</div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="topbar-btn" title="Notifications"><i class="fas fa-bell text-success"></i></button>
+                <img src="https://ui-avatars.com/api/?name=Tuba+Zainab&background=4f46e5&color=fff&rounded=true" class="topbar-avatar" alt="Avatar">
+            </div>
+        </div>
+
+        <!-- Monthly & Daily Status Row (Matching Screenshot Top) -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="status-icon-wrap" style="background:#ede9fe; color:#6366f1;"><i class="fas fa-chart-pie"></i></div>
+                            <div>
+                                <h5 class="fw-bold mb-0 text-dark">Monthly Status</h5>
+                                <small class="text-muted">October, 2026</small>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm text-center" style="width:130px;" value="October, 2026" readonly>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-metric" style="border-left-color: #6366f1;">
+                            <div class="metric-label">Total Admission</div>
+                            <div class="metric-value">4</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #10b981;">
+                            <div class="metric-label">Total Collection</div>
+                            <div class="metric-value text-success">₹20,200</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #f59e0b;">
+                            <div class="metric-label">Total Billing</div>
+                            <div class="metric-value">₹12,100</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #06b6d4;">
+                            <div class="metric-label">Total Enquiry</div>
+                            <div class="metric-value">1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="status-icon-wrap" style="background:#e0f2fe; color:#0284c7;"><i class="fas fa-calendar-day"></i></div>
+                            <div>
+                                <h5 class="fw-bold mb-0 text-dark">Daily Status</h5>
+                                <small class="text-muted">27-10-2026</small>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm text-center" style="width:130px;" value="27-10-2026" readonly>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-metric" style="border-left-color: #0284c7;">
+                            <div class="metric-label">Total Admission</div>
+                            <div class="metric-value">0</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #10b981;">
+                            <div class="metric-label">Total Collection</div>
+                            <div class="metric-value text-success">₹0</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #f59e0b;">
+                            <div class="metric-label">Total Billing</div>
+                            <div class="metric-value">₹0</div>
+                        </div>
+                        <div class="status-metric" style="border-left-color: #8b5cf6;">
+                            <div class="metric-label">Performance Target</div>
+                            <div class="metric-value text-primary">On Track</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links (Matching Reference Screenshot Colors & Badges) -->
+        <div class="card border-0 rounded-4 p-4 mb-4 bg-white shadow-sm" style="border:1px solid var(--admin-border)!important;">
+            <h5 class="fw-bold text-dark mb-3"><i class="fas fa-th text-primary me-2"></i>Quick Links</h5>
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminAdmissions')" class="quick-link-card ql-admission"><div class="quick-link-icon"><i class="fas fa-user-plus"></i></div><span class="quick-link-title">Admission</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminEnquiries')" class="quick-link-card ql-enquiry"><div class="quick-link-icon"><i class="fas fa-user-tag"></i></div><span class="quick-link-title">Enquiry</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminReceipts')" class="quick-link-card ql-fees"><div class="quick-link-icon"><i class="fas fa-wallet"></i></div><span class="quick-link-title">Fees</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminReports')" class="quick-link-card ql-expenses"><div class="quick-link-icon"><i class="fas fa-receipt"></i></div><span class="quick-link-title">Add Expenses</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminReports')" class="quick-link-card ql-tasks"><div class="quick-link-icon"><i class="fas fa-bullseye"></i></div><span class="quick-link-title">Task</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminReports')" class="quick-link-card ql-reports"><div class="quick-link-icon"><i class="fas fa-chart-line"></i></div><span class="quick-link-title">Student Reports</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminEmployees')" class="quick-link-card ql-attendance"><div class="quick-link-icon"><i class="fas fa-clipboard-check"></i></div><span class="quick-link-title">Student Attendance</span></a></div>
+                <div class="col-6 col-md-4 col-lg"><a href="javascript:void(0)" onclick="switchView('adminReceipts')" class="quick-link-card ql-receipt"><div class="quick-link-icon"><i class="fas fa-print"></i></div><span class="quick-link-title">Print Receipt</span></a></div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card border-0 rounded-4 p-4 shadow-sm bg-white" style="border:1px solid var(--admin-border)!important;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-chart-area text-primary me-2"></i>Monthly Target vs Actual Admissions</h5>
+                        <span class="badge bg-light text-muted border">FY 2025-2026</span>
+                    </div>
+                    <div style="height: 240px;">
+                        <canvas id="demoChart1"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 rounded-4 p-4 shadow-sm bg-white" style="border:1px solid var(--admin-border)!important;">
+                    <h5 class="fw-bold mb-3 text-dark"><i class="fas fa-chart-pie text-info me-2"></i>Admissions by Domain</h5>
+                    <div style="height: 240px;">
+                        <canvas id="demoChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables Row: Recent Enquiries and Expected Collections -->
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card border-0 rounded-4 p-4 shadow-sm bg-white" style="border:1px solid var(--admin-border)!important;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-user-clock text-primary me-2"></i>Today's Enquiry</h5>
+                        <button class="btn btn-sm btn-link text-primary p-0" onclick="switchView('adminEnquiries')">View All</button>
+                    </div>
+                    <table class="table admin-table mb-0">
+                        <thead><tr><th>SRNO</th><th>STUDENT</th><th>COURSE</th><th>LEAD STATUS</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td><span class="table-student-name">Shafeen Sheikh</span><span class="table-student-phone">7020031922</span></td><td>PHP/MySQL Web Dev</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td></tr>
+                            <tr><td>2</td><td><span class="table-student-name">Shagun Murai</span><span class="table-student-phone">8379066454</span></td><td>MERN Stack</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td></tr>
+                            <tr><td>3</td><td><span class="table-student-name">Vidhanshu Meshram</span><span class="table-student-phone">9021731900</span></td><td>Data Science</td><td><span class="badge bg-info-subtle text-info">Telephonic</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 rounded-4 p-4 shadow-sm bg-white" style="border:1px solid var(--admin-border)!important;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-hand-holding-usd text-success me-2"></i>Today's Expected Collection</h5>
+                        <button class="btn btn-sm btn-link text-primary p-0" onclick="switchView('adminAdmissions')">View All</button>
+                    </div>
+                    <table class="table admin-table mb-0">
+                        <thead><tr><th>STUDENT</th><th>COURSE</th><th>AMOUNT</th><th>ACTION</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="table-student-name">Shagun Murai</span><span class="table-student-phone">8379066454</span></td><td>MERN Stack</td><td class="text-danger fw-bold">₹5,000</td><td><button class="btn btn-sm btn-outline-success" onclick="switchView('adminReceipts')">Collect</button></td></tr>
+                            <tr><td><span class="table-student-name">Vidhanshu Meshram</span><span class="table-student-phone">9021731900</span></td><td>Data Science</td><td class="text-danger fw-bold">₹10,000</td><td><button class="btn btn-sm btn-outline-success" onclick="switchView('adminReceipts')">Collect</button></td></tr>
+                            <tr><td><span class="table-student-name">Rohit Patre</span><span class="table-student-phone">9822604510</span></td><td>C++ Programming</td><td class="text-danger fw-bold">₹6,000</td><td><button class="btn btn-sm btn-outline-success" onclick="switchView('adminReceipts')">Collect</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 4: ALL ENQUIRIES (EXACT DISHA ALL ENQUIRY.PNG REBRANDED)
+     ========================================================================= -->
+<section id="adminEnquiries" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <!-- Pill Buttons -->
+        <div class="d-flex gap-2 mb-3">
+            <button class="btn btn-sm btn-primary px-3 fw-bold">All Enquiry</button>
+            <button class="btn btn-sm btn-light border px-3 fw-bold">FollowUps</button>
+            <button class="btn btn-sm btn-light border px-3 fw-bold">Visits</button>
+            <button class="btn btn-sm btn-light border px-3 fw-bold">Reminders</button>
+        </div>
+
+        <div class="admin-header-banner">
+            <svg class="banner-arcs" viewBox="0 0 100 100"><circle class="arc-1" cx="100" cy="100" r="80"/><circle class="arc-2" cx="100" cy="100" r="50"/></svg>
+            <h2>All Enquiries</h2>
+            <p>Track student walk-ins, phone calls, and conversions into admissions.</p>
+        </div>
+
+        <div class="filter-toolbar row g-3 align-items-center">
+            <div class="col-md-3"><select class="form-select"><option>Lead Status (All)</option><option>Walkin</option><option>Telephonic</option><option>Interested</option></select></div>
+            <div class="col-md-3"><select class="form-select"><option>Select Course</option><option>PHP/MySQL</option><option>Python</option></select></div>
+            <div class="col-md-2"><select class="form-select"><option>Sort By: Recent</option></select></div>
+            <div class="col-md-4 d-flex gap-2">
+                <button class="btn btn-search-green flex-fill"><i class="fas fa-search me-1"></i> Search</button>
+                <button class="btn btn-clear-orange"><i class="fas fa-rotate me-1"></i> Clear</button>
+                <button class="btn btn-export-purple"><i class="fas fa-download me-1"></i> Export</button>
+                <button class="btn btn-add-amber" onclick="alert('Open Add Enquiry Modal')"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="admin-card-table">
+            <table class="table admin-table">
+                <thead><tr><th>SRNO</th><th>STUDENT NAME</th><th>COURSE NAME</th><th>DATE</th><th>LEAD STATUS</th><th>ACTIONS</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td><span class="table-student-name">SHAFEEN SHEIKH</span><span class="table-student-phone">7020031922</span></td><td>CERTIFICATE COURSE IN PHP/MYSQL</td><td>2026-04-28</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td><td><button class="action-btn text-success" title="Convert to Admission" onclick="switchView('adminAdmissions')"><i class="fas fa-user-check"></i></button></td></tr>
+                    <tr><td>2</td><td><span class="table-student-name">SHAGUN MURAI</span><span class="table-student-phone">8379066454</span></td><td>MERN STACK ADVANCED</td><td>2026-03-28</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td><td><button class="action-btn text-success" onclick="switchView('adminAdmissions')"><i class="fas fa-user-check"></i></button></td></tr>
+                    <tr><td>3</td><td><span class="table-student-name">VIDHANSHU MESHRAM</span><span class="table-student-phone">9021731900</span></td><td>CERTIFICATE COURSE IN DATA SCIENCE</td><td>2026-03-28</td><td><span class="badge bg-info-subtle text-info">Telephonic</span></td><td><button class="action-btn"><i class="fas fa-phone-alt text-primary"></i></button></td></tr>
+                    <tr><td>4</td><td><span class="table-student-name">HUMANSHI WANJARI</span><span class="table-student-phone">9923388817</span></td><td>CERTIFICATE COURSE IN C++ &amp; DSA</td><td>2026-03-23</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td><td><button class="action-btn"><i class="fas fa-phone-alt text-primary"></i></button></td></tr>
+                    <tr><td>5</td><td><span class="table-student-name">ABHISHEK MAHAIDAR</span><span class="table-student-phone">9960831187</span></td><td>CERTIFICATE COURSE IN PYTHON</td><td>2026-03-23</td><td><span class="badge bg-success-subtle text-success">Walkin</span></td><td><button class="action-btn"><i class="fas fa-phone-alt text-primary"></i></button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 5: ADMISSIONS REGISTRY (EXACT ALL ADMISSION.PNG REBRANDED)
+     ========================================================================= -->
+<section id="adminAdmissions" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <!-- Pill Buttons -->
+        <div class="d-flex gap-2 mb-3">
+            <button class="btn btn-sm btn-light border px-3 fw-bold">Ongoing Report</button>
+            <button class="btn btn-sm btn-light border px-3 fw-bold">Cancelled Report</button>
+            <button class="btn btn-sm btn-light border px-3 fw-bold">Completed Report</button>
+            <button class="btn btn-sm btn-primary px-3 fw-bold">All Admission</button>
+        </div>
+
+        <div class="admin-header-banner">
+            <svg class="banner-arcs" viewBox="0 0 100 100"><circle class="arc-1" cx="100" cy="100" r="80"/><circle class="arc-2" cx="100" cy="100" r="50"/></svg>
+            <h2>Admissions Report</h2>
+            <p>Student admissions, course tracks, fee paid vs balance due, and assigned trainers.</p>
+        </div>
+
+        <div class="admin-card-table">
+            <div class="table-responsive">
+                <table class="table admin-table">
+                    <thead><tr><th>FORM NO</th><th>STUDENT NAME</th><th>TEACHER</th><th>COURSE</th><th>BATCH</th><th>TRACK</th><th>TOTAL FEES</th><th>FEES PAID</th><th>DUE</th><th>STATUS</th><th>ADMISSION DATE</th><th>ACTION</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="badge bg-light text-dark border">PC-ADM-26-01</span></td><td><span class="table-student-name">ESHA KOTTAWAR</span><span class="table-student-phone">9322096897</span></td><td>SANJAY SAINI</td><td>CERTIFICATE IN MS EXCEL</td><td>10:00 am-11:00 am</td><td>DAILY</td><td>₹1,500</td><td class="text-success fw-bold">₹1,500</td><td class="text-muted fw-bold">0</td><td><span class="badge bg-primary px-2 py-1">Ongoing</span></td><td>17-10-2026</td><td><button class="action-btn text-primary" onclick="switchView('adminReceipts')"><i class="fas fa-receipt"></i></button></td></tr>
+                        <tr><td><span class="badge bg-light text-dark border">PC-ADM-26-02</span></td><td><span class="table-student-name">IZMA TAQQEES</span><span class="table-student-phone">9763245105</span></td><td>SANJAY SAINI</td><td>MS OFFICE AUTOMATION</td><td>10:00 am-11:00 am</td><td>DAILY</td><td>₹2,800</td><td class="text-success fw-bold">₹2,800</td><td class="text-muted fw-bold">0</td><td><span class="badge bg-primary px-2 py-1">Ongoing</span></td><td>08-10-2026</td><td><button class="action-btn text-primary" onclick="switchView('adminReceipts')"><i class="fas fa-receipt"></i></button></td></tr>
+                        <tr><td><span class="badge bg-light text-dark border">PC-ADM-26-03</span></td><td><span class="table-student-name">ZAFREEN FATIMA</span><span class="table-student-phone">9373079028</span></td><td>RAVINA SAINI</td><td>COMPUTER SKILLS &amp; PYTHON</td><td>10:00 am-11:00 am</td><td>DAILY</td><td>₹4,500</td><td class="text-success fw-bold">₹4,500</td><td class="text-muted fw-bold">0</td><td><span class="badge bg-primary px-2 py-1">Ongoing</span></td><td>08-10-2026</td><td><button class="action-btn text-primary" onclick="switchView('adminReceipts')"><i class="fas fa-receipt"></i></button></td></tr>
+                        <tr><td><span class="badge bg-light text-dark border">PC-ADM-26-04</span></td><td><span class="table-student-name">RASHIK PATRE</span><span class="table-student-phone">9822604510</span></td><td>RAVINA SAINI</td><td>GRAPHICS &amp; AUTOMATION</td><td>12:00 pm-01:00 pm</td><td>DAILY</td><td>₹2,800</td><td class="text-success fw-bold">₹2,800</td><td class="text-muted fw-bold">0</td><td><span class="badge bg-primary px-2 py-1">Ongoing</span></td><td>07-10-2026</td><td><button class="action-btn text-primary" onclick="switchView('adminReceipts')"><i class="fas fa-receipt"></i></button></td></tr>
+                        <tr><td><span class="badge bg-light text-dark border">PC-ADM-26-05</span></td><td><span class="table-student-name">RAVINA SHENDE</span><span class="table-student-phone">9225045310</span></td><td>SANJAY SAINI</td><td>GRAPHICS &amp; AUTOMATION</td><td>01:00 pm-02:00 pm</td><td>DAILY</td><td>₹8,000</td><td class="text-success fw-bold">₹8,000</td><td class="text-muted fw-bold">0</td><td><span class="badge bg-primary px-2 py-1">Ongoing</span></td><td>28-08-2026</td><td><button class="action-btn text-primary" onclick="switchView('adminReceipts')"><i class="fas fa-receipt"></i></button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bottom Summary Cards (Matching Reference Screenshot Footer) -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3"><div class="p-3 rounded-3 text-center border fw-bold text-success" style="background:#ecfdf5; border-color:#a7f3d0!important; font-size:1.1rem;">Total Fees: ₹4,53,650.00</div></div>
+            <div class="col-md-3"><div class="p-3 rounded-3 text-center border fw-bold text-primary" style="background:#ede9fe; border-color:#c4b5fd!important; font-size:1.1rem;">Total Fees Paid: ₹4,20,750.00</div></div>
+            <div class="col-md-3"><div class="p-3 rounded-3 text-center border fw-bold text-danger" style="background:#fff1f2; border-color:#fecdd3!important; font-size:1.1rem;">Total Due: ₹32,900.00</div></div>
+            <div class="col-md-3"><div class="p-3 rounded-3 text-center border fw-bold text-success" style="background:#ecfdf5; border-color:#a7f3d0!important; font-size:1.1rem;">Total Students: 96</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 6: PRINT RECEIPT (MATCHING PRINT RECEIPT.PNG & FORMAL LETTERHEAD)
+     ========================================================================= -->
+<section id="adminReceipts" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <div class="admin-header-banner">
+            <svg class="banner-arcs" viewBox="0 0 100 100"><circle class="arc-1" cx="100" cy="100" r="80"/><circle class="arc-2" cx="100" cy="100" r="50"/></svg>
+            <h2>Print Receipt</h2>
+            <p>Generate and print official Proper Computer fee receipts.</p>
+        </div>
+
+        <!-- Receipt Printable Preview Box -->
+        <div class="card p-4 shadow-sm border rounded-4 bg-white max-w-800 mx-auto mb-4" style="max-width: 780px;">
+            <div class="doc-header">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="assets/images/logo.svg" alt="Proper Computer" style="height: 48px;">
+                    <div>
+                        <h4 class="fw-bold mb-0" style="color:#1e1b4b;">PROPER COMPUTER</h4>
+                        <small class="text-muted d-block">City Center Complex, Station Road, Opp. Metro Pillar 124, Kamptee / Nagpur</small>
+                        <small class="text-muted">Phone: +91 98223 34455 &bull; Email: info@propercomputer.com</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <div class="doc-badge">FEE RECEIPT</div>
+                    <div class="small fw-bold text-dark mt-1">PC-REC-2604-0001</div>
+                </div>
+            </div>
+
+            <div class="doc-details-grid my-3">
+                <div>
+                    <div><strong>Student Name:</strong> Shafeen Sheikh</div>
+                    <div><strong>Admission No:</strong> PC-ADM-2026-0001</div>
+                    <div><strong>Mobile:</strong> 7020031922</div>
+                </div>
+                <div>
+                    <div><strong>Receipt Date:</strong> 28-04-2026</div>
+                    <div><strong>Course:</strong> Web Development with PHP/MySQL</div>
+                    <div><strong>Payment Mode:</strong> UPI (UPI/2604/78912)</div>
+                </div>
+            </div>
+
+            <table class="doc-table">
+                <thead><tr><th>#</th><th>Description</th><th class="text-end">Amount</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Tuition Fee Installment 1 (PHP &amp; MySQL)</td><td class="text-end fw-bold">₹7,000.00</td></tr>
+                    <tr class="bg-light"><td colspan="2" class="text-end fw-bold">TOTAL AMOUNT PAID:</td><td class="text-end fw-bold text-success fs-5">₹7,000.00</td></tr>
+                </tbody>
+            </table>
+
+            <div class="p-2 mb-3 bg-light border rounded small"><strong>Amount in Words:</strong> Rupees Seven Thousand Only</div>
+
+            <div class="row g-2 p-3 bg-light rounded border mb-4 small">
+                <div class="col-4">Total Course Fee: <strong>₹14,000.00</strong></div>
+                <div class="col-4">Total Paid: <strong class="text-success">₹14,000.00</strong></div>
+                <div class="col-4">Remaining Due: <strong class="text-success">₹0.00 (Cleared)</strong></div>
+            </div>
+
+            <div class="doc-signatures">
+                <div class="signature-line">Student Signature</div>
+                <div class="signature-line">Authorized Signatory<br><strong>PROPER COMPUTER</strong></div>
+            </div>
+
+            <div class="text-center mt-4 pt-3 border-top no-print">
+                <button class="btn btn-pc-primary px-4" onclick="window.print()"><i class="fas fa-print me-2"></i> Print This Receipt</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 7: EMPLOYEE PROFILES & PAYSLIPS (MATCHING EMPLOYEE PROFILES.PNG)
+     ========================================================================= -->
+<section id="adminEmployees" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <div class="admin-header-banner">
+            <svg class="banner-arcs" viewBox="0 0 100 100"><circle class="arc-1" cx="100" cy="100" r="80"/><circle class="arc-2" cx="100" cy="100" r="50"/></svg>
+            <h2>Employee Profiles</h2>
+            <p>Faculty members, skill tags, and monthly salary payslips.</p>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Sanjay Saini -->
+            <div class="col-md-3">
+                <div class="card border rounded-4 p-4 text-center shadow-sm bg-white position-relative">
+                    <span class="position-absolute top-0 start-0 m-3 small fw-bold text-success">Active</span>
+                    <img src="https://ui-avatars.com/api/?name=Sanjay+Saini&background=4f46e5&color=fff&size=100" class="rounded-circle mx-auto my-3" style="width:85px; height:85px;">
+                    <h5 class="fw-bold text-dark mb-0">SANJAY SAINI</h5>
+                    <small class="text-muted d-block mb-3">Teacher &bull; Senior IT Instructor</small>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center mb-4">
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">PHOTOSHOP</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">MS EXCEL</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">MS WORD</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary w-100 py-2">View Profile</button>
+                </div>
+            </div>
+            <!-- Ravina Saini -->
+            <div class="col-md-3">
+                <div class="card border rounded-4 p-4 text-center shadow-sm bg-white position-relative">
+                    <span class="position-absolute top-0 start-0 m-3 small fw-bold text-success">Active</span>
+                    <img src="https://ui-avatars.com/api/?name=Ravina+Saini&background=10b981&color=fff&size=100" class="rounded-circle mx-auto my-3" style="width:85px; height:85px;">
+                    <h5 class="fw-bold text-dark mb-0">RAVINA SAINI</h5>
+                    <small class="text-muted d-block mb-3">Teacher &bull; Full Stack Trainer</small>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center mb-4">
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">C#.NET</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">C</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">C++</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary w-100 py-2">View Profile</button>
+                </div>
+            </div>
+            <!-- Nazmeen Bano -->
+            <div class="col-md-3">
+                <div class="card border rounded-4 p-4 text-center shadow-sm bg-white position-relative">
+                    <span class="position-absolute top-0 start-0 m-3 small fw-bold text-danger">Inactive</span>
+                    <img src="https://ui-avatars.com/api/?name=Nazmeen+Bano&background=64748b&color=fff&size=100" class="rounded-circle mx-auto my-3" style="width:85px; height:85px;">
+                    <h5 class="fw-bold text-dark mb-0">NAZMEEN BANO</h5>
+                    <small class="text-muted d-block mb-3">Teacher &bull; Accounts Trainer</small>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center mb-4">
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">TALLY PRIME</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">GST</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">MS WORD</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary w-100 py-2">View Profile</button>
+                </div>
+            </div>
+            <!-- Naushina Zamzam -->
+            <div class="col-md-3">
+                <div class="card border rounded-4 p-4 text-center shadow-sm bg-white position-relative">
+                    <span class="position-absolute top-0 start-0 m-3 small fw-bold text-danger">Inactive</span>
+                    <img src="https://ui-avatars.com/api/?name=Naushina+Zamzam&background=64748b&color=fff&size=100" class="rounded-circle mx-auto my-3" style="width:85px; height:85px;">
+                    <h5 class="fw-bold text-dark mb-0">NAUSHINA ZAMZAM</h5>
+                    <small class="text-muted d-block mb-3">Teacher &bull; Office Trainer</small>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center mb-4">
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">TALLY PRIME</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">GST</span>
+                        <span class="badge border" style="background:#fff1f2; color:#e11d48;">MS EXCEL</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary w-100 py-2">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 8: DMR REPORT & TARGET VS ACHIEVEMENTS (MATCHING DMR & TARGET REPORT)
+     ========================================================================= -->
+<section id="adminReports" class="view-section py-4">
+    <div class="container-fluid px-4">
+        <div class="admin-header-banner">
+            <svg class="banner-arcs" viewBox="0 0 100 100"><circle class="arc-1" cx="100" cy="100" r="80"/><circle class="arc-2" cx="100" cy="100" r="50"/></svg>
+            <h2>DMR Report (Daily Management Report)</h2>
+            <p>Audited performance summaries matching institutional DMR and achievement sheets.</p>
+        </div>
+
+        <div class="admin-card-table mb-4">
+            <div class="table-responsive">
+                <table class="table admin-table">
+                    <thead><tr><th>SR NO.</th><th>DATE</th><th>BRANCH NAME</th><th>ADMISSION</th><th>BILLING</th><th>COLLECTION</th><th>EXPENSES</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>2025-09-01 - 2026-10-27</td><td><strong>KAMPTEE / NAGPUR CAMPUS</strong></td><td><span class="badge bg-info text-dark px-3 py-1">96</span></td><td><span class="badge bg-primary px-3 py-1">₹4,53,650</span></td><td><span class="badge bg-success px-3 py-1">₹4,20,750</span></td><td><span class="badge bg-danger px-3 py-1">₹3,02,415</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5 class="fw-bold text-dark mb-3"><i class="fas fa-bullseye text-primary me-2"></i>Monthly Target vs Achievements</h5>
+        <div class="admin-card-table">
+            <table class="table admin-table">
+                <thead><tr><th>SR NO.</th><th>MONTH YEAR</th><th>TARGET ADMISSIONS</th><th>ACTUAL ADMISSIONS</th><th>TARGET COLLECTION</th><th>ACTUAL COLLECTION</th><th>TARGET BILLING</th><th>ACTUAL BILLING</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>September, 2025</td><td>50</td><td><span class="badge bg-primary px-3 py-1">48</span></td><td>₹1,50,000</td><td><span class="badge bg-success px-3 py-1">₹1,62,000</span></td><td>₹2,00,000</td><td><span class="badge bg-info text-dark px-3 py-1">₹2,10,000</span></td></tr>
+                    <tr><td>2</td><td>October, 2025</td><td>30</td><td><span class="badge bg-primary px-3 py-1">32</span></td><td>₹1,00,000</td><td><span class="badge bg-success px-3 py-1">₹1,05,000</span></td><td>₹1,50,000</td><td><span class="badge bg-info text-dark px-3 py-1">₹1,54,000</span></td></tr>
+                    <tr><td>3</td><td>May, 2026</td><td>50</td><td><span class="badge bg-primary px-3 py-1">54</span></td><td>₹1,50,000</td><td><span class="badge bg-success px-3 py-1">₹1,58,000</span></td><td>₹2,00,000</td><td><span class="badge bg-info text-dark px-3 py-1">₹2,15,000</span></td></tr>
+                    <tr><td>4</td><td>October, 2026</td><td>40</td><td><span class="badge bg-primary px-3 py-1">42</span></td><td>₹1,80,000</td><td><span class="badge bg-success px-3 py-1">₹1,84,500</span></td><td>₹2,20,000</td><td><span class="badge bg-info text-dark px-3 py-1">₹2,28,000</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     VIEW 9: XAMPP SETUP GUIDE
+     ========================================================================= -->
+<section id="xamppGuide" class="view-section py-4">
+    <div class="container py-4">
+        <div class="card border-0 rounded-4 p-4 p-md-5 shadow-lg bg-white">
+            <h3 class="fw-bold text-primary mb-3"><i class="fas fa-server me-2"></i>How to Run in XAMPP (Windows)</h3>
+            <p class="lead text-muted">The complete PHP/MySQL codebase with prepared statements and 21 database tables is ready in this directory.</p>
+            
+            <div class="alert alert-light border mb-4">
+                <h6 class="fw-bold mb-2">Step 1: Copy Project Folder to XAMPP</h6>
+                <code>C:\xampp\htdocs\Proper Computer</code>
+            </div>
+
+            <div class="alert alert-light border mb-4">
+                <h6 class="fw-bold mb-2">Step 2: Start Apache and MySQL in XAMPP Control Panel</h6>
+                <p class="mb-0 small text-muted">Open XAMPP Control Panel and click "Start" next to Apache and MySQL.</p>
+            </div>
+
+            <div class="alert alert-light border mb-4">
+                <h6 class="fw-bold mb-2">Step 3: Run 1-Click Database Installer</h6>
+                <p class="mb-2 small text-muted">Visit in your browser:</p>
+                <code>http://localhost/Proper%20Computer/install.php</code>
+                <p class="mt-2 mb-0 small text-muted">Click <strong>"Run 1-Click Database Setup &amp; Seeder"</strong>. It will automatically build the MySQL database, create 21 tables, and insert all 65+ courses, sample students, admissions, and targets.</p>
+            </div>
+
+            <div class="alert alert-primary bg-primary-subtle border-primary-subtle mb-0">
+                <h6 class="fw-bold text-primary mb-2"><i class="fas fa-key me-2"></i>Login Credentials:</h6>
+                <div class="small">
+                    <strong>Admin Portal:</strong> <code>http://localhost/Proper%20Computer/login.php</code> &bull; Username: <code>admin</code> / Password: <code>admin123</code><br>
+                    <strong>Student Portal:</strong> <code>http://localhost/Proper%20Computer/student-login.php</code> &bull; Mobile: <code>7020031922</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for Tab Switching, Live Search & Charts -->
+<script>
+const allCourseData = [
+    // Programming and Web Development
+    { name: "Web Development with PHP/MySQL", cat: "Programming", dur: "3 Months", fee: "₹15,000", lvl: "Beginner", icon: "fas fa-code", desc: "Dynamic web apps, OOP PHP, PDO database interactions, REST APIs and authentication." },
+    { name: "MERN Stack", cat: "Programming", dur: "4 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fab fa-react", desc: "Full-stack development with MongoDB, Express.js, React.js, and Node.js." },
+    { name: "React JS", cat: "Programming", dur: "2 Months", fee: "₹14,000", lvl: "Beginner", icon: "fab fa-react", desc: "Build reactive single-page front-end web apps with hooks and Redux Toolkit." },
+    { name: "Next Js", cat: "Programming", dur: "2.5 Months", fee: "₹18,000", lvl: "Intermediate", icon: "fas fa-layer-group", desc: "Server-side rendering, static generation, app router, and production SEO." },
+    { name: "Nestjs", cat: "Programming", dur: "2 Months", fee: "₹18,000", lvl: "Advanced", icon: "fas fa-server", desc: "Scalable server-side TypeScript backend architecture with dependency injection." },
+    { name: "Java", cat: "Programming", dur: "3 Months", fee: "₹15,000", lvl: "Beginner", icon: "fab fa-java", desc: "Core to Advanced Java programming, OOP concepts, collections, and JDBC." },
+    { name: "C++", cat: "Programming", dur: "2.5 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-terminal", desc: "High-performance programming, memory pointers, OOP, and STL library." },
+    { name: "Python", cat: "Programming", dur: "2.5 Months", fee: "₹14,000", lvl: "Beginner", icon: "fab fa-python", desc: "Python syntax, file automation, web scraping, OOP, and data analytics." },
+    { name: "DSA with Java", cat: "Programming", dur: "4 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fas fa-sitemap", desc: "Algorithmic problem solving and data structures implemented in Java for FAANG." },
+    { name: "DSA with Python", cat: "Programming", dur: "4 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fas fa-project-diagram", desc: "Data structures and LeetCode algorithmic patterns in Python." },
+    { name: "Data Structures & Algorithms", cat: "Programming", dur: "3.5 Months", fee: "₹18,000", lvl: "Intermediate", icon: "fas fa-network-wired", desc: "Foundations of computational thinking, sorting, searching, and graphs." },
+    { name: "Competitive Programming", cat: "Programming", dur: "3 Months", fee: "₹16,000", lvl: "Advanced", icon: "fas fa-trophy", desc: "Advanced contest programming, number theory, and dynamic programming." },
+    { name: "System Design", cat: "Programming", dur: "2.5 Months", fee: "₹22,000", lvl: "Advanced", icon: "fas fa-cubes", desc: "Architect large-scale distributed systems, microservices, and caching layers." },
+    { name: "Database Management System", cat: "Programming", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-database", desc: "Relational database theory, ER modelling, ACID properties, and normalization." },
+    { name: "SQL", cat: "Programming", dur: "1.5 Months", fee: "₹8,000", lvl: "Beginner", icon: "fas fa-table", desc: "Complex joins, subqueries, window functions, and views in MySQL." },
+    { name: "Wordpress", cat: "Programming", dur: "1.5 Months", fee: "₹9,000", lvl: "Beginner", icon: "fab fa-wordpress", desc: "Custom themes, Elementor page builders, and WooCommerce store setup." },
+    { name: "App Development", cat: "Programming", dur: "4 Months", fee: "₹25,000", lvl: "Intermediate", icon: "fas fa-mobile-alt", desc: "Mobile application engineering for iOS and Android platforms." },
+    { name: "React Native", cat: "Programming", dur: "3 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fab fa-react", desc: "Cross-platform mobile apps for Android and iOS using React." },
+    { name: "Flutter", cat: "Programming", dur: "3.5 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fas fa-feather-alt", desc: "Natively compiled cross-platform apps using Google Dart and Flutter." },
+
+    // Data and Artificial Intelligence
+    { name: "Data Science", cat: "Data", dur: "6 Months", fee: "₹35,000", lvl: "Intermediate", icon: "fas fa-brain", desc: "End-to-end data science lifecycle, machine learning, and deep learning." },
+    { name: "Data Analytics", cat: "Data", dur: "3.5 Months", fee: "₹20,000", lvl: "Beginner", icon: "fas fa-chart-bar", desc: "Transform business data into visual insights using Excel, SQL, and Power BI." },
+    { name: "Business Analytics", cat: "Data", dur: "3 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fas fa-briefcase", desc: "Connect data insights with executive corporate decisions and KPI tracking." },
+    { name: "Data Engineering", cat: "Data", dur: "4.5 Months", fee: "₹30,000", lvl: "Advanced", icon: "fas fa-database", desc: "Build resilient data pipelines, ETL workflows, and Apache Spark processing." },
+    { name: "Power BI", cat: "Data", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-chart-line", desc: "Master Power Query, dimensional modelling, DAX, and corporate dashboards." },
+    { name: "Tableau", cat: "Data", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-chart-area", desc: "Interactive visual analytics, calculated fields, and executive visual stories." },
+    { name: "Excel", cat: "Data", dur: "1.5 Months", fee: "₹6,000", lvl: "Beginner", icon: "fas fa-file-excel", desc: "Advanced VLOOKUP/XLOOKUP, PivotTables, conditional formatting, and macros." },
+    { name: "Machine Learning (ML)", cat: "Data", dur: "3.5 Months", fee: "₹25,000", lvl: "Intermediate", icon: "fas fa-robot", desc: "Supervised and unsupervised algorithms, Scikit-Learn, and tuning." },
+    { name: "Deep Learning", cat: "Data", dur: "3.5 Months", fee: "₹28,000", lvl: "Advanced", icon: "fas fa-network-wired", desc: "Neural networks, CNNs for computer vision, RNNs, and PyTorch." },
+    { name: "Natural Language Processing (NLP)", cat: "Data", dur: "3 Months", fee: "₹26,000", lvl: "Advanced", icon: "fas fa-language", desc: "Text analytics, sentiment classification, embeddings, and Transformers." },
+    { name: "Large Language Model (LLM)", cat: "Data", dur: "2.5 Months", fee: "₹30,000", lvl: "Advanced", icon: "fas fa-microchip", desc: "LLM architectures, prompt engineering, LoRA fine-tuning, and Ollama APIs." },
+    { name: "Gen AI", cat: "Data", dur: "2 Months", fee: "₹24,000", lvl: "Beginner", icon: "fas fa-magic", desc: "Multimodal AI, LangChain, RAG architecture, and vector databases." },
+    { name: "AI Tools", cat: "Data", dur: "1 Month", fee: "₹8,000", lvl: "All Levels", icon: "fas fa-tools", desc: "Boost productivity using 50+ cutting-edge generative AI workflow tools." },
+    { name: "AI Video Generation", cat: "Data", dur: "1.5 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-video", desc: "Studio-quality AI videos, avatars with HeyGen, Runway, and ElevenLabs." },
+
+    // Cybersecurity and IT Infrastructure
+    { name: "Ethical Hacking", cat: "Cybersecurity", dur: "3.5 Months", fee: "₹25,000", lvl: "Intermediate", icon: "fas fa-user-secret", desc: "Penetration testing, Kali Linux, Nmap, Wireshark, Metasploit exploitation." },
+    { name: "Cybersecurity", cat: "Cybersecurity", dur: "3 Months", fee: "₹22,000", lvl: "Beginner", icon: "fas fa-shield-alt", desc: "Security architecture, firewall protocols, IAM, and incident response." },
+    { name: "SOC Analyst", cat: "Cybersecurity", dur: "3 Months", fee: "₹24,000", lvl: "Intermediate", icon: "fas fa-desktop", desc: "Security Operations Center tier 1/2 roles, SIEM tools, and threat hunting." },
+    { name: "Linux", cat: "Cybersecurity", dur: "2 Months", fee: "₹10,000", lvl: "Beginner", icon: "fab fa-linux", desc: "Command-line mastery, permissions, bash scripting, and server admin." },
+    { name: "Cloud Computing", cat: "Cybersecurity", dur: "2.5 Months", fee: "₹18,000", lvl: "Beginner", icon: "fas fa-cloud", desc: "Foundational cloud services, virtualization, VPCs, and storage models." },
+    { name: "AWS Cloud Practitioner", cat: "Cybersecurity", dur: "2.5 Months", fee: "₹18,000", lvl: "Beginner", icon: "fab fa-aws", desc: "AWS CLF-C02 preparation: EC2, S3, RDS, IAM, Lambda, and architecture." },
+    { name: "DevOps", cat: "Cybersecurity", dur: "4 Months", fee: "₹28,000", lvl: "Intermediate", icon: "fas fa-infinity", desc: "CI/CD automation, Docker containers, Kubernetes, Jenkins, and Ansible." },
+    { name: "Docker and Kubernetes", cat: "Cybersecurity", dur: "2.5 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fab fa-docker", desc: "Containerize applications with Docker and orchestrate with Kubernetes." },
+    { name: "Infrastructure as Code", cat: "Cybersecurity", dur: "2 Months", fee: "₹18,000", lvl: "Advanced", icon: "fas fa-code-branch", desc: "Automate cloud provisioning, declare server configurations as code." },
+    { name: "Terraform", cat: "Cybersecurity", dur: "2 Months", fee: "₹18,000", lvl: "Advanced", icon: "fas fa-cubes", desc: "Provision multi-cloud infrastructure with HashiCorp Terraform modules." },
+
+    // Design, Video Editing and Creative Technology
+    { name: "UI/UX", cat: "Design", dur: "3 Months", fee: "₹20,000", lvl: "Beginner", icon: "fas fa-paint-brush", desc: "User journeys, wireframing, Figma design systems, and prototyping." },
+    { name: "UX Research", cat: "Design", dur: "2 Months", fee: "₹15,000", lvl: "Intermediate", icon: "fas fa-search", desc: "Usability testing, user interviews, heuristic evaluation, and personas." },
+    { name: "Graphic Design", cat: "Design", dur: "3 Months", fee: "₹15,000", lvl: "Beginner", icon: "fas fa-palette", desc: "Visual composition, typography, color psychology, and brand collateral." },
+    { name: "Graphic Design With AI", cat: "Design", dur: "2 Months", fee: "₹16,000", lvl: "Beginner", icon: "fas fa-wand-magic-sparkles", desc: "Supercharge creative workflows with Midjourney, Firefly, and Adobe AI." },
+    { name: "Canva", cat: "Design", dur: "1 Month", fee: "₹5,000", lvl: "Beginner", icon: "fas fa-file-image", desc: "Fast visual design for social media, pitch decks, and brand templates." },
+    { name: "Adobe Photoshop", cat: "Design", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-image", desc: "Raster editing, retouching, masking, compositing, and poster design." },
+    { name: "Illustrator", cat: "Design", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-pen-nib", desc: "Vector graphics, brand logos, typography, geometric art, and SVG export." },
+    { name: "Adobe InDesign", cat: "Design", dur: "1.5 Months", fee: "₹10,000", lvl: "Beginner", icon: "fas fa-newspaper", desc: "Multi-page magazines, brochures, product catalogues, and print layout." },
+    { name: "Affinity Studio", cat: "Design", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fas fa-vector-square", desc: "Modern creative suite: Affinity Designer, Photo, and Publisher." },
+    { name: "Adobe Premiere Pro", cat: "Design", dur: "2 Months", fee: "₹15,000", lvl: "Beginner", icon: "fas fa-film", desc: "Professional video editing, timeline assembly, Lumetri color grading." },
+    { name: "AfterEffects", cat: "Design", dur: "2.5 Months", fee: "₹18,000", lvl: "Intermediate", icon: "fas fa-circle-notch", desc: "Kinetic motion graphics, visual effects, 3D camera tracking, and keyframing." },
+    { name: "DaVinci Resolve", cat: "Design", dur: "2.5 Months", fee: "₹18,000", lvl: "Intermediate", icon: "fas fa-sliders", desc: "Hollywood-standard color grading, Fairlight audio, and Fusion VFX." },
+    { name: "Video Editing", cat: "Design", dur: "3 Months", fee: "₹18,000", lvl: "Beginner", icon: "fas fa-video", desc: "Pacing, storytelling, audio mixing, cut grammar, and YouTube mastery." },
+    { name: "VN Mobile Video Editing", cat: "Design", dur: "1 Month", fee: "₹6,000", lvl: "Beginner", icon: "fas fa-mobile", desc: "Cinematic reels and vertical video creation on mobile smartphones." },
+    { name: "VFX", cat: "Design", dur: "3.5 Months", fee: "₹25,000", lvl: "Advanced", icon: "fas fa-fire", desc: "Cinematic visual effects, green screen compositing, and particle systems." },
+    { name: "Motion Graphics", cat: "Design", dur: "3 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fas fa-play-circle", desc: "Logo reveals, explainer video animations, and kinetic typography." },
+    { name: "Blender", cat: "Design", dur: "3.5 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fas fa-cube", desc: "3D modelling, procedural texturing, character rigging, and Cycles render." },
+    { name: "Unreal Engine", cat: "Design", dur: "4 Months", fee: "₹30,000", lvl: "Advanced", icon: "fas fa-gamepad", desc: "Next-gen real-time 3D environments, virtual production, and Blueprints." },
+    { name: "3D Game Development in Unity", cat: "Design", dur: "4 Months", fee: "₹28,000", lvl: "Intermediate", icon: "fas fa-vr-cardboard", desc: "Complete 3D games with Unity engine, C# scripting, and physics." },
+
+    // Digital Marketing and Content Creation
+    { name: "Digital Marketing", cat: "Marketing", dur: "3 Months", fee: "₹16,000", lvl: "Beginner", icon: "fas fa-bullhorn", desc: "360-degree online marketing: SEO, Meta ads, Google Ads, and funnels." },
+    { name: "Search Engine Optimization (SEO) Mastery", cat: "Marketing", dur: "2 Months", fee: "₹12,000", lvl: "Intermediate", icon: "fas fa-search-dollar", desc: "On-page, technical, off-page SEO, schemas, and Google top rankings." },
+    { name: "Performance Marketing", cat: "Marketing", dur: "2.5 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fas fa-funnel-dollar", desc: "Data-driven paid ads on Meta & Google with high ROAS scaling." },
+    { name: "Growth Hacking", cat: "Marketing", dur: "2 Months", fee: "₹18,000", lvl: "Advanced", icon: "fas fa-rocket", desc: "Rapid experimentation to scale user acquisition, viral loops, and retention." },
+    { name: "Instagram Content Creation", cat: "Marketing", dur: "1.5 Months", fee: "₹8,000", lvl: "Beginner", icon: "fab fa-instagram", desc: "Viral reels production, carousel design, storytelling, and monetization." },
+    { name: "YouTube Content Creation", cat: "Marketing", dur: "2 Months", fee: "₹12,000", lvl: "Beginner", icon: "fab fa-youtube", desc: "Channel niche selection, click-worthy thumbnails, and retention scripting." },
+    { name: "Copywriting", cat: "Marketing", dur: "1.5 Months", fee: "₹10,000", lvl: "Beginner", icon: "fas fa-keyboard", desc: "High-converting persuasive sales copy for landing pages and ads." },
+    { name: "UGC", cat: "Marketing", dur: "1 Month", fee: "₹8,000", lvl: "Beginner", icon: "fas fa-camera", desc: "Film authentic user-generated content and secure paid brand partnerships." },
+    { name: "D2C Brand Building", cat: "Marketing", dur: "2.5 Months", fee: "₹22,000", lvl: "Intermediate", icon: "fas fa-store", desc: "Launch and scale direct-to-consumer e-commerce brands on Shopify." },
+    { name: "N8N Automation", cat: "Marketing", dur: "2 Months", fee: "₹15,000", lvl: "Beginner", icon: "fas fa-cogs", desc: "Automate business operations, lead funnels, and AI workflows with n8n." },
+
+    // Finance, Business and Management
+    { name: "Financial Analysis", cat: "Finance", dur: "3 Months", fee: "₹20,000", lvl: "Intermediate", icon: "fas fa-chart-line", desc: "Balance sheet analysis, cash flow forecasting, and financial ratios." },
+    { name: "Financial Modelling & Valuation", cat: "Finance", dur: "3 Months", fee: "₹25,000", lvl: "Advanced", icon: "fas fa-calculator", desc: "Dynamic 3-statement models, DCF valuation, and comparable companies." },
+    { name: "Fundamental Analysis", cat: "Finance", dur: "2 Months", fee: "₹14,000", lvl: "Beginner", icon: "fas fa-coins", desc: "Company intrinsic valuation, economic moats, and quarterly reports." },
+    { name: "Technical Analysis", cat: "Finance", dur: "2 Months", fee: "₹14,000", lvl: "Beginner", icon: "fas fa-chart-candlestick", desc: "Candlestick chart patterns, support/resistance, RSI, and MACD indicators." },
+    { name: "Risk Management", cat: "Finance", dur: "2 Months", fee: "₹18,000", lvl: "Intermediate", icon: "fas fa-shield-virus", desc: "Identify and mitigate financial, credit, operational, and regulatory risk." },
+    { name: "HR Management", cat: "Finance", dur: "2.5 Months", fee: "₹15,000", lvl: "Beginner", icon: "fas fa-users-gear", desc: "Recruitment pipelines, onboarding, payroll compliance, and appraisals." },
+
+    // Blockchain and Emerging Technologies
+    { name: "Blockchain", cat: "Blockchain", dur: "3.5 Months", fee: "₹26,000", lvl: "Intermediate", icon: "fas fa-cubes", desc: "Cryptographic hashing, consensus algorithms, and Ethereum network." },
+    { name: "Web3 Mastery", cat: "Blockchain", dur: "3 Months", fee: "₹28,000", lvl: "Advanced", icon: "fas fa-link", desc: "Full-stack dApps, Solidity smart contracts, and ethers.js frontend." }
+];
+
+let selectedCat = 'all';
+
+function renderCourseGrid(courses) {
+    const row = document.getElementById('courseCardsRow');
+    if (!row) return;
+    row.innerHTML = courses.map(c => `
+        <div class="col-lg-4 col-md-6">
+            <div class="course-card">
+                <div class="course-card-header">
+                    <span class="course-badge-level text-primary">${c.lvl}</span>
+                    <div class="course-icon-wrap"><i class="${c.icon}"></i></div>
+                    <span class="badge bg-white text-muted border px-2 py-1 small">${c.cat}</span>
+                </div>
+                <div class="course-card-body">
+                    <h3 class="course-card-title">${c.name}</h3>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock text-primary me-1"></i> ${c.dur}</span>
+                        <span><i class="fas fa-laptop-house text-primary me-1"></i> Hybrid</span>
+                    </div>
+                    <p class="text-muted small mb-0 flex-grow-1">${c.desc}</p>
+                </div>
+                <div class="course-card-footer">
+                    <div>
+                        <small class="text-muted d-block" style="font-size:0.75rem;">TUITION FEE</small>
+                        <span class="course-price">${c.fee}</span>
+                    </div>
+                    <button class="btn btn-sm btn-pc-primary fw-semibold px-3 py-2" onclick="alert('Enrolling into: ${c.name}\\nFee: ${c.fee}\\nDuration: ${c.dur}\\n\\nOpening Enquiry Form...')">Syllabus &amp; Enroll &rarr;</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterDemoCourses() {
+    const q = document.getElementById('liveSearchInput').value.toLowerCase().trim();
+    const filtered = allCourseData.filter(c => {
+        const matchesCat = (selectedCat === 'all' || c.cat === selectedCat);
+        const matchesQuery = (q === '' || c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q));
+        return matchesCat && matchesQuery;
+    });
+    renderCourseGrid(filtered);
+}
+
+function filterByCat(cat, btn) {
+    selectedCat = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => {
+        b.classList.remove('btn-primary', 'active');
+        b.classList.add('btn-outline-secondary');
+    });
+    btn.classList.remove('btn-outline-secondary');
+    btn.classList.add('btn-primary', 'active');
+    filterDemoCourses();
+}
+
+function switchView(viewId, btn) {
+    document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+    document.querySelectorAll('.nav-pill-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(viewId);
+    if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (btn) btn.classList.add('active');
+}
+
+// Initialize on Load
+document.addEventListener('DOMContentLoaded', function () {
+    renderCourseGrid(allCourseData);
+
+    // Initialize Dashboard Charts
+    const c1 = document.getElementById('demoChart1');
+    if (c1) {
+        new Chart(c1, {
+            type: 'bar',
+            data: {
+                labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                datasets: [
+                    { label: 'Target', data: [50, 35, 35, 40, 50, 40], backgroundColor: '#e2e8f0', borderRadius: 4 },
+                    { label: 'Actual Admissions', data: [42, 38, 32, 37, 48, 42], backgroundColor: '#4f46e5', borderRadius: 4 }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+
+    const c2 = document.getElementById('demoChart2');
+    if (c2) {
+        new Chart(c2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Programming', 'Data & AI', 'Design', 'Cybersecurity', 'Marketing', 'Finance'],
+                datasets: [{
+                    data: [35, 24, 18, 15, 12, 8],
+                    backgroundColor: ['#4f46e5', '#06b6d4', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
